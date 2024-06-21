@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Minimal Telegram Bot API'
+project = 'Robogram: Telegram Bot API'
 copyright = "2024, Ritvik Nag"
 author = "Ritvik Nag"
 
@@ -128,7 +128,7 @@ latex_elements = {
 # [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'robogram.tex',
-     'Minimal Telegram Bot API Documentation',
+     'Robogram Documentation',
      'Ritvik Nag', 'manual'),
 ]
 
@@ -139,7 +139,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'robogram',
-     'Minimal Telegram Bot API Documentation',
+     'Robogram Documentation',
      [author], 1)
 ]
 
@@ -151,7 +151,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'robogram',
-     'Minimal Telegram Bot API Documentation',
+     'Robogram Documentation',
      author,
      'robogram',
      'One line description of project.',

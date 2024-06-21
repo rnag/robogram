@@ -38,8 +38,8 @@ and "help wanted" is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-Minimal Telegram Bot API could always use more documentation, whether as part of the
-official Minimal Telegram Bot API docs, in docstrings, or even on the web in blog posts,
+Robogram could always use more documentation, whether as part of the
+official Robogram docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Submit Feedback

@@ -1,4 +1,4 @@
-* Minimal Telegram Bot API version:
+* Robogram version:
 * Python version:
 * Operating System:
 

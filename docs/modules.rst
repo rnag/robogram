@@ -1,5 +1,5 @@
 robogram
-===========
+========
 
 .. toctree::
    :maxdepth: 4

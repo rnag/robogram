@@ -24,17 +24,11 @@ Robogram 🤖📨️ - Telegram Bot API
      :target: https://pyup.io/repos/github/rnag/robogram/
      :alt: Updates
 
-
-**robogram** is a minimal wrapper package
-utilizing the `Telegram Bot API`_
-to send messages (to a user, channel, or group).
+**robogram** is an (unofficial) Minimal `Telegram Bot API`_ Wrapper
+to send messages on `Telegram`_ - to user, channel, or group.
 
 The only dependency is `requests`_ --
 with `over 50K stars on GitHub`_.
-
-* Free software: MIT license
-* Documentation: https://robogram.readthedocs.io.
-* Telegram Bot API Docs: https://core.telegram.org/bots/api
 
 .. _requests: https://pypi.org/project/requests/
 .. _over 50K stars on GitHub: https://github.com/psf/requests/stargazers
@@ -45,6 +39,19 @@ with `over 50K stars on GitHub`_.
 .. _channel: https://telegram.org/tour/channels
 .. _group: https://telegram.org/tour/groups
 .. _/getUpdates: https://core.telegram.org/bots/api#getupdates
+.. _on PyPI: https://pypi.org/project/robogram
+.. _in the docs: https://core.telegram.org/bots/tutorial#getting-ready
+
+Install
+-------
+
+``robogram`` is available `on PyPI`_, and can be installed with ``pip``:
+
+.. code-block:: shell
+
+    $ pip install robogram
+
+You'll also need to obtain an Bot Token as outlined `in the docs`_.
 
 Usage
 -----
