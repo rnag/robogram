@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """ Telegram Bot API. """
 
-from enum import Enum
-from typing import Union
-
-from requests import HTTPError, RequestException
-import requests
 import os
 
+from enum import Enum
+from functools import wraps
+from typing import Union
+
+from requests import get, post, request, RequestException
 
 from .errors import RobogramException
 
@@ -23,9 +23,7 @@ class ChatActions(Enum):
     FIND_LOCATION = 'find_location'
 
 
-from functools import wraps
-
-JSONType = Union[dict, list]
+ListOrDict = Union[dict, list]
 
 
 def handle_requests_errors(func):
@@ -42,25 +40,28 @@ def handle_requests_errors(func):
     return wrapper
 
 
-class Bot:
+class TeleBot:
 
     def __init__(self, token):
-        self.baseurl = f'https://api.telegram.org/bot{token}/'
+        self.base_url = f'https://api.telegram.org/bot{token}/'
         self.token = token
         self.hook = None
-        self.hook_port = None
-        self.hook_host = None
+        # self.hook_port = None
+        # self.hook_host = None
 
+    @handle_requests_errors
     def _req(self, method, path, **kwargs):
-        requests.request(method, f'{self.baseurl}{path}', **kwargs)
+        return request(method, f'{self.base_url}{path}', **kwargs)
 
+    # noinspection PyTypeChecker
     @handle_requests_errors
-    def _get(self, path, params=None) -> JSONType:
-        return requests.get(f'{self.baseurl}{path}', params=params)
+    def _get(self, path, params=None) -> ListOrDict:
+        return get(f'{self.base_url}{path}', params=params)
 
+    # noinspection PyTypeChecker
     @handle_requests_errors
-    def _post(self, path, data=None, json=None, **kwargs) -> JSONType:
-        return requests.post(f'{self.baseurl}{path}', data, json, **kwargs)
+    def _post(self, path, data=None, json=None, **kwargs) -> ListOrDict:
+        return post(f'{self.base_url}{path}', data, json, **kwargs)
 
     def set_webhook(self, hook=None):
         self.hook = hook or ''
@@ -150,7 +151,8 @@ class Bot:
             'chat_id': chat_id,
             'action': action.value
         }
-        return requests.post(self.baseurl + 'sendChatAction', json=data)
+
+        return self._post('sendChatAction', json=data)
 
     def get_user_profile_photos(self, user_id, offset=None, limit=None):
         data = {'user_id': user_id}
@@ -158,24 +160,30 @@ class Bot:
             data['offset'] = offset
         if limit:
             data['limit'] = limit
-        return requests.post(self.baseurl + 'getUserProfilePhotos', json=data)
+
+        return self._post('getUserProfilePhotos', json=data)
 
     def get_file(self, file_id, filename=None, directory=None):
         data = {'file_id': file_id}
+
         json_response = self._post('getFile', json=data)
+
         if json_response['ok']:
+            import uuid
             file_path = json_response['result']['file_path']
             extension = file_path.split('.')[-1]
-            import uuid
             download_name = f'{filename if filename else str(uuid.uuid4())}.{extension}'
             save_path = os.path.join(directory, download_name) if directory else download_name
             download_link = f'https://api.telegram.org/file/bot{self.token}/{file_path}'
-            with requests.get(download_link, stream=True) as r:
+
+            with get(download_link, stream=True) as r:
                 r.raise_for_status()
                 with open(save_path, 'wb') as f:
                     for chunk in r.iter_content(chunk_size=8192):
                         f.write(chunk)
+
             return True
+
         return False
 
     def get_chat_ids_from_updates(self, offset=None, limit=None, timeout=None):
@@ -191,21 +199,24 @@ class Bot:
 
         """
         r = self.get_updates(offset, limit, timeout)
+
         assert r['ok']
 
-        r = r['result']
-
+        # noinspection PyUnboundLocalVariable, PyTestUnpassedFixture
         return {c['id']: f"[{c['type'].upper()}] {c.get('username') or c.get('title')}"
-                for m in r
+                for m in r['result']
                 for v in m.values()
                 if isinstance(v, dict) and (c := v.get('chat'))}
 
     def get_updates(self, offset=None, limit=None, timeout=None):
         data = {}
+
         if offset:
             data['offset'] = offset
+
         if limit:
             data['limit'] = limit
+
         if timeout:
             data['timeout'] = timeout
 

@@ -7,8 +7,14 @@ to send messages (to a user, channel, or group).
 
 
 Sample Usage:
+    >>> from pprint import pprint
+    >>> from robogram import TeleBot
+    >>> bot = TeleBot('TOKEN')
+    >>> me = bot.get_me()
+    >>> pprint(me)
+    >>> chat_id = -123456789
+    >>> bot.send_message(chat_id, 'Hello World!')
 
-    >>> import robogram
 
 For full documentation and more advanced usage, please see
 <https://robogram.readthedocs.io>.
@@ -18,13 +24,13 @@ For full documentation and more advanced usage, please see
 """
 
 __all__ = [
-    'Bot',
+    'TeleBot',
     'ChatActions',
 ]
 
 import logging
 from .api_telegram_bot import (
-    Bot,
+    TeleBot,
     ChatActions,
 )
 from .errors import RobogramException

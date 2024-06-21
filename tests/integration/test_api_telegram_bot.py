@@ -4,7 +4,7 @@ from pprint import pprint
 
 import pytest
 
-from robogram import Bot
+from robogram import TeleBot
 
 
 BOT_API_TOKEN = os.getenv('BOT_API_TOKEN')
@@ -17,7 +17,7 @@ CHAT_ID_GROUP = os.getenv('CHAT_ID_GROUP')
 @pytest.fixture
 def bot():
     assert BOT_API_TOKEN, '`BOT_API_TOKEN` missing from environment'
-    return Bot(BOT_API_TOKEN)
+    return TeleBot(BOT_API_TOKEN)
 
 
 @pytest.fixture

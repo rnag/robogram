@@ -3,7 +3,7 @@
 import pytest
 
 
-from robogram import Bot
+from robogram import TeleBot
 
 
 @pytest.fixture

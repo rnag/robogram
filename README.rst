@@ -39,35 +39,45 @@ with `over 50K stars on GitHub`_.
 .. _requests: https://pypi.org/project/requests/
 .. _over 50K stars on GitHub: https://github.com/psf/requests/stargazers
 .. _Telegram Bot API: https://core.telegram.org/bots/api
+.. _Telegram: https://telegram.org/
+.. _TeleBot: https://core.telegram.org/bots
+.. _personal chat: https://telegram.org/tour/chat-folders
+.. _channel: https://telegram.org/tour/channels
+.. _group: https://telegram.org/tour/groups
+.. _/getUpdates: https://core.telegram.org/bots/api#getupdates
 
 Usage
 -----
 
+Use a `TeleBot`_ to send a message to a `personal chat`_, `channel`_, or `group`_ on `Telegram`_:
+
 .. code-block:: python
 
-    import json
-
-    from robogram import Bot
+    from robogram import TeleBot
 
     # Authentication token, that you get by:
     #   (1) opening a chat with `@BotFather`
     #   (2) using command `/newbot` to create a new bot
-    API_TOKEN = 'TODO'
+    BOT_TOKEN = 'TOKEN'
 
     # Chat ID, that you get by:
     #   (1) Add the new bot to personal chat, channel, or group
     #   (2) Send a message to bot
     CHAT_ID = -123456789
 
-    bot = Bot(API_TOKEN)
+    bot = TeleBot(BOT_TOKEN)
 
     r = bot.send_message(CHAT_ID, 'Hello World!')
     print(r)
 
+Looking for an easier way to get the *Chat ID* for a personal chat, channel, or group?
+
+Follow steps above, and add the Bot to chat. Then use ``TeleBot.get_chat_ids_from_updates``,
+a convenience wrapper around `/getUpdates`_:
+
 .. code-block:: python3
 
-    me = bot.get_me()
-    print(json.dumps(me, indent=2))
+    import json
 
     # Get a mapping of Chat ID to Chat Type/Title,
     # based on `/getUpdates` response.
@@ -80,6 +90,12 @@ Usage
     chat_id_to_title = bot.get_chat_ids_from_updates()
     print(json.dumps(chat_id_to_title, indent=2))
 
+To get info on the `TeleBot`_ associated with the token:
+
+.. code-block:: python3
+
+    me = bot.get_me()
+    print(json.dumps(me, indent=2))
 
 
 Credits
